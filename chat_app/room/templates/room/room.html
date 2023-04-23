@@ -9,7 +9,17 @@
 
 <div class="lg:w-2/4 mx-4 lg:mx-auto p-4 bg-white rounded-xl">
     <div class="chat-messages space-y-3" id="chat-messages">
-        
+        {% for message in messages %}
+            {% if  request.user.username == message.user.username  %}
+                <div class="p-4 bg-gray-200 rounded-xl ">
+                    <p class="font-semibold">{{ message.user.username }} : {{ message.content }}</p>
+                </div>
+            {% else %}
+                <div class="p-4 bg-red rounded-xl ">
+                    <p class="font-semibold">{{ message.user.username }} : {{ message.content }}</p>
+                </div>
+            {% endif %}
+        {% endfor %}
     </div>
 </div>
 
@@ -57,14 +67,18 @@
         if (data.message) {
             // document.querySelector('#chat-messages').innerHTML += ('<b>' + data.username + ': ' + data.message + '<br>');
             if (userName === data.username ){
-                let html ='<div class="p-4 bg-gray-200 rounded-xl">';
+                let html ='<div class="p-4 bg-gray-200 rounded-xl ">';
                     html += '<p class="font-semibold">' + data.username + ' : ' + data.message ;
                     html +='</p></div>';
             
                 document.querySelector('#chat-messages').innerHTML += html;
             }
             else{
-                document.querySelector('#chat-messages').innerHTML += ('<b>' + data.username + ': ' + data.message + '<br>');
+                let html ='<div class="p-4 bg-red rounded-xl ">';
+                    html += '<p class="font-semibold">' + data.username + ' : ' + data.message ;
+                    html +='</p></div>';
+            
+                document.querySelector('#chat-messages').innerHTML += html;
             }
 
         } else {
