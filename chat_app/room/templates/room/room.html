@@ -50,7 +50,46 @@
 
     chatSocket.onmessage = function(e) {
         console.log('on message recived')
+
+        // whene message is recived from the server
+        const data = JSON.parse(e.data);
+
+        if (data.message) {
+            // document.querySelector('#chat-messages').innerHTML += ('<b>' + data.username + ': ' + data.message + '<br>');
+            if (userName === data.username ){
+                let html ='<div class="p-4 bg-gray-200 rounded-xl">';
+                    html += '<p class="font-semibold">' + data.username + ' : ' + data.message ;
+                    html +='</p></div>';
+            
+                document.querySelector('#chat-messages').innerHTML += html;
+            }
+            else{
+                document.querySelector('#chat-messages').innerHTML += ('<b>' + data.username + ': ' + data.message + '<br>');
+            }
+
+        } else {
+            // alert('The message was empty!')
+        }
     }
+
+    document.querySelector('#chat-message-submit').onclick = function(e) {
+        e.preventDefault()
+
+        // get the value from the id #chat-message-input.value
+        const messageInputDom = document.querySelector('#chat-message-input');
+        const message = messageInputDom.value;
+
+        // send message to socket
+        chatSocket.send(JSON.stringify({
+            'message': message,
+            'username': userName,
+            'room': roomName
+        }));
+
+        messageInputDom.value = '';
+
+        return false
+    };
 
 </script>
 {% endblock %}
