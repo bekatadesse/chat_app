@@ -3,7 +3,7 @@ from .forms import SignUpForm
 from django.contrib.auth import login
 # Create your views here.
 
-def frontpage(request):
+def index(request):
     return render(request, 'core/index.html')
 
 def signup(request):
