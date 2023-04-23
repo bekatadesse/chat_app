@@ -24,3 +24,33 @@
     </form>
 </div>
 {% endblock %}
+
+
+
+{% block scripts %}
+{{ room.slug|json_script:"json-roomname" }}
+{{ request.user.username|json_script:"json-username" }}
+
+<script>
+    const roomName = JSON.parse(document.getElementById('json-roomname').textContent);
+    const userName = JSON.parse(document.getElementById('json-username').textContent);
+    
+    
+    const chatSocket = new WebSocket(
+        'ws://'
+        + window.location.host
+        + '/ws/'
+        + roomName
+        + '/'
+    );
+
+    chatSocket.onclose = function(e) {
+        console.log('on close')
+    }
+
+    chatSocket.onmessage = function(e) {
+        console.log('on message recived')
+    }
+
+</script>
+{% endblock %}
