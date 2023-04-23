@@ -65,7 +65,7 @@
         const data = JSON.parse(e.data);
 
         if (data.message) {
-            // document.querySelector('#chat-messages').innerHTML += ('<b>' + data.username + ': ' + data.message + '<br>');
+            
             if (userName === data.username ){
                 let html ='<div class="p-4 bg-gray-200 rounded-xl ">';
                     html += '<p class="font-semibold">' + data.username + ' : ' + data.message ;
@@ -73,13 +73,16 @@
             
                 document.querySelector('#chat-messages').innerHTML += html;
             }
+
             else{
                 let html ='<div class="p-4 bg-red rounded-xl ">';
                     html += '<p class="font-semibold">' + data.username + ' : ' + data.message ;
                     html +='</p></div>';
             
                 document.querySelector('#chat-messages').innerHTML += html;
-            }
+            };
+
+            scrollToBottom();
 
         } else {
             // alert('The message was empty!')
@@ -104,6 +107,17 @@
 
         return false
     };
+
+    
+    // A function for finding the messages element, and scroll to the bottom of it.
+    
+    function scrollToBottom() {
+        let objDiv = document.getElementById("chat-messages");
+        objDiv.scrollTop = objDiv.scrollHeight;
+    }
+
+    // Add this below the function to trigger the scroll on load.
+    scrollToBottom();
 
 </script>
 {% endblock %}
