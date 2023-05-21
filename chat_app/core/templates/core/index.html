@@ -1,9 +1,10 @@
 {% extends 'core/core_base.html' %}
-
+{% load static %} 
 {% block title %}Welcome | {% endblock %}
 
 {% block content %}
 <div class="p-10 lg:p-20 text-center">
     <h1 class="text-3xl lg:text-6xl text-white">   Chat App  </h1>
+    <img src= "{% static 'Google-Chat.png' %}" alt="Image description" width="900" height="300" style="display: block; margin-left: auto; margin-right: auto;"  >
 </div>
 {% endblock %}
